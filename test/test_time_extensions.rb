@@ -16,6 +16,14 @@ class TestTimeExtensions < Test::Unit::TestCase
     assert( Time.workday?(Time.parse("April 12, 2010 10:45 am")))
   end
   
+  should "know what configured workdays are" do
+    BusinessTime::Config.reset
+    BusinessTime::Config.work_week = [:tue,:wed,:thur]
+    assert( Time.part_of_workweek?(Time.parse("June 8, 2010 9:45 am")))
+    assert(!Time.part_of_workweek?(Time.parse("June 7, 2010 9:45 am")))
+    BusinessTime::Config.reset
+  end
+  
   should "know a holiday is not a workday" do
     BusinessTime::Config.reset
     
