@@ -23,12 +23,18 @@ module BusinessTime
       # someplace in the initializers of your application.
       attr_accessor :holidays
 
+      # You can set this yourself, either by the load method below, or
+      # by saying
+      #   BusinessTime::Config.work_week = [:mon,:tue,:wed,:thur,:fri]
+      # someplace in the initializers of your application.
+      attr_accessor :work_week
     end
     
     def self.reset
       self.holidays = []
       self.beginning_of_workday = "9:00 am"
       self.end_of_workday = "5:00 pm"
+      self.work_week = [:mon,:tue,:wed,:thur,:fri]
     end
     
     # loads the config data from a yaml file written as:
@@ -45,6 +51,7 @@ module BusinessTime
       data = YAML::load(File.open(filename))
       self.beginning_of_workday = data["business_time"]["beginning_of_workday"]
       self.end_of_workday = data["business_time"]["end_of_workday"]
+      #self.work_week = data["business_time"]["work_week"]
       data["business_time"]["holidays"].each do |holiday|
         self.holidays <<
           Time.zone ? Time.zone.parse(holiday) : Time.parse(holiday)

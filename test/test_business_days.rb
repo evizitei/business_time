@@ -64,6 +64,18 @@ class TestBusinessDays < Test::Unit::TestCase
       expected = Time.parse("July 5th, 2010, 4:50 pm")
       assert_equal expected, monday_afternoon
     end
+    
+    context "in an alternate workweek" do
+      should "handle alternate workweek" do
+        BusinessTime::Config.reset
+        BusinessTime::Config.work_week = [:tue, :wed, :thur, :fri, :sat]
+        saturday_afternoon = Time.parse("6/5/2010 4:50 PM")
+        next_workday = 1.business_day.after(saturday_afternoon)
+        expected = Time.parse("6/8/2010 4:50 PM")
+        assert_equal expected,next_workday
+        BusinessTime::Config.reset
+      end
+    end
   end
   
 end
