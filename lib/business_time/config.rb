@@ -23,10 +23,8 @@ module BusinessTime
       # someplace in the initializers of your application.
       attr_accessor :holidays
 
-      # You can set this yourself, either by the load method below, or
-      # by saying
-      #   BusinessTime::Config.work_week = [:mon,:tue,:wed,:thur,:fri]
-      # someplace in the initializers of your application.
+      # You can set this yourself someplace in the initializers of your application.
+      # TODO: add work_week parsing to config file loading
       attr_accessor :work_week
     end
     
